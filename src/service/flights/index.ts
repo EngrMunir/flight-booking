@@ -9,6 +9,7 @@ export const searchFlights = async (params: {
   adults: number;
   currency?: string;
   nonStop?: boolean;
+  max?: number;
 }) => {
   const token = await getAccessToken();
   if (!token) throw new Error("Auth token failed");
@@ -21,7 +22,6 @@ export const searchFlights = async (params: {
     ...(params.returnDate ? { returnDate: params.returnDate } : {}),
     ...(params.currency ? { currencyCode: params.currency } : {}),
     ...(params.nonStop ? { nonStop: "true" } : {}),
-    max: "10",
   });
 
   const res = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?${query}`, {
